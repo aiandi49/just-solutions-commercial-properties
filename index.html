@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just Solutions — Commercial Property Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #f8f6f1;
+  --slate: #1c1c1c;
+  --mid: #2e2e2e;
+  --border: #2a2a2a;
+  --gold: #d4a84b;
+  --gold-dim: rgba(212,168,75,0.15);
+  --gold-border: rgba(212,168,75,0.3);
+  --muted: #666;
+  --text: #c8c4bc;
+  --green: #4caf82;
+  --red: #e05555;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Instrument Sans', sans-serif;
+  min-height: 100vh;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: rgba(10,10,10,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 24px;
+}
+.brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.brand span { color: var(--white); opacity: 0.5; }
+.topbar-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  flex: 1;
+}
+.nav-tab {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+}
+.nav-tab:hover, .nav-tab.active {
+  color: var(--white);
+  background: var(--mid);
+}
+.nav-tab.active { color: var(--gold); }
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.btn-add {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  padding: 7px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-add:hover { opacity: 0.85; }
+
+/* ── HERO SEARCH BAR ── */
+.hero {
+  background: var(--slate);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 24px 32px;
+}
+.hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 800;
+  line-height: 1.0;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 400;
+}
+.hero-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  letter-spacing: 0.3px;
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-select {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 12px;
+  color: var(--white);
+  background: var(--mid);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.filter-select:hover { border-color: var(--gold); }
+.filter-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--mid);
+  border: 1px solid var(--border);
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.filter-chip:hover, .filter-chip.active {
+  color: var(--gold);
+  border-color: var(--gold-border);
+  background: var(--gold-dim);
+}
+.results-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* ── VIEW TOGGLE ── */
+.view-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.view-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.view-toggle {
+  display: flex;
+  gap: 4px;
+}
+.view-btn {
+  background: var(--mid);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.view-btn.active { color: var(--gold); border-color: var(--gold-border); }
+
+/* ── PROPERTY GRID ── */
+.property-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+/* ── PROPERTY CARD ── */
+.prop-card {
+  background: var(--slate);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.prop-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212,168,75,0.4);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+
+/* Card image */
+.card-img-wrap {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  background: var(--mid);
+}
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.prop-card:hover .card-img-wrap img { transform: scale(1.04); }
+.card-photo-count {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.75);
+  color: var(--white);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+.card-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+.badge-flum {
+  background: rgba(212,168,75,0.9);
+  color: var(--black);
+}
+.badge-zoned {
+  background: rgba(76,175,130,0.9);
+  color: var(--black);
+}
+.card-render-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(10,10,10,0.85);
+  border: 1px solid var(--gold-border);
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+/* Card body */
+.card-body {
+  padding: 16px;
+}
+.card-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.card-address {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.card-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.card-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.stat { text-align: center; }
+.stat-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  display: block;
+}
+.stat-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Card footer */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.2);
+}
+.card-broker {
+  font-size: 11px;
+  color: var(--muted);
+}
+.card-broker strong { color: var(--text); font-weight: 500; }
+.btn-view-renders {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: var(--gold-dim);
+  color: var(--gold);
+  border: 1px solid var(--gold-border);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-view-renders:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* ── COMING SOON CARD ── */
+.coming-soon-card {
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 340px;
+  gap: 12px;
+  opacity: 0.4;
+  cursor: default;
+}
+.coming-soon-card:hover { transform: none; border-color: var(--border); box-shadow: none; }
+.cs-icon { font-size: 32px; }
+.cs-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── PROPERTY DETAIL PANEL ── */
+.detail-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: stretch;
+  justify-content: flex-end;
+}
+.detail-overlay.open { display: flex; animation: slideIn 0.3s ease; }
+@keyframes slideIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.detail-panel {
+  width: min(92vw, 1100px);
+  height: 100vh;
+  background: var(--black);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: panelSlide 0.3s ease;
+}
+@keyframes panelSlide {
+  from { transform: translateX(40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Detail header */
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--slate);
+}
+.detail-header-left { display: flex; flex-direction: column; gap: 3px; }
+.detail-address {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+}
+.detail-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--gold);
+}
+.detail-header-right { display: flex; gap: 8px; align-items: center; }
+.btn-drone {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-drone:hover { opacity: 0.85; }
+.btn-drone svg { width: 14px; height: 14px; fill: white; }
+.btn-close {
+  background: var(--mid);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.btn-close:hover { color: var(--white); border-color: var(--muted); }
+
+/* Detail body */
+.detail-body {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Main image area */
+.detail-images {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 24px;
+  gap: 16px;
+  border-right: 1px solid var(--border);
+}
+
+/* Hero image (original) */
+.orig-section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.orig-img-wrap {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: zoom-in;
+}
+.orig-img-wrap img {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+.orig-img-wrap:hover img { transform: scale(1.02); }
+.orig-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 16px 14px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+}
+.orig-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+}
+.orig-sublabel {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  margin-top: 2px;
+}
+
+/* Renders section */
+.renders-section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.renders-grid-detail {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.render-card-detail {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: zoom-in;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.render-card-detail:hover {
+  border-color: var(--gold-border);
+  transform: scale(1.01);
+}
+.render-card-detail img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+.render-label-detail {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+  padding: 20px 10px 8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--white);
+}
+.render-zoom-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 3px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 12px;
+}
+.render-card-detail:hover .render-zoom-icon { opacity: 1; }
+
+/* Detail sidebar */
+.detail-sidebar {
+  overflow-y: auto;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sidebar-section-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.sidebar-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.sidebar-stat {
+  background: var(--slate);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+}
+.sidebar-stat-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  display: block;
+}
+.sidebar-stat-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  display: block;
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+}
+.zoning-block {
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: 6px;
+  padding: 12px;
+}
+.zoning-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.zoning-row:last-child { margin-bottom: 0; }
+.zoning-key {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+.zoning-val {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--white);
+  text-align: right;
+}
+.zoning-val.highlight { color: var(--gold); }
+.uses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.use-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text);
+  padding: 5px 8px;
+  background: var(--slate);
+  border-radius: 4px;
+}
+.use-check { color: var(--green); font-size: 12px; flex-shrink: 0; }
+.contact-block {
+  background: var(--slate);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.contact-item {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.contact-item:last-child { border-bottom: none; }
+.contact-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.contact-info {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.contact-info a { color: var(--gold); text-decoration: none; }
+.disclaimer-block {
+  background: var(--slate);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.disclaimer-block strong { color: var(--text); }
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0,0,0,0.96);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.lightbox.open { display: flex; }
+.lb-img {
+  max-width: 94vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.lb-cap {
+  margin-top: 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+.lb-close {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  background: var(--mid);
+  border: 1px solid var(--border);
+  color: var(--white);
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2001;
+}
+.lb-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(30,30,30,0.8);
+  border: 1px solid var(--border);
+  color: var(--white);
+  width: 48px;
+  height: 64px;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2001;
+  transition: background 0.2s;
+}
+.lb-nav:hover { background: var(--mid); }
+.lb-prev { left: 16px; }
+.lb-next { right: 16px; }
+
+/* ── YOUTUBE MODAL ── */
+.yt-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+.yt-modal.open { display: flex; }
+.yt-wrap {
+  width: min(90vw, 960px);
+  aspect-ratio: 16/9;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.yt-wrap iframe { width: 100%; height: 100%; border: none; }
+.yt-close {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  background: var(--mid);
+  border: 1px solid var(--border);
+  color: var(--white);
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.yt-cap {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.footer-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.footer-right {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .detail-body { grid-template-columns: 1fr; }
+  .detail-sidebar { display: none; }
+  .renders-grid-detail { grid-template-columns: 1fr; }
+  .property-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="brand">Just Solutions <span>|</span> Commercial</div>
+  <div class="topbar-divider"></div>
+  <nav class="nav-tabs">
+    <a href="#" class="nav-tab active">For Sale</a>
+    <a href="#" class="nav-tab">Lease</a>
+    <a href="#" class="nav-tab">Auctions</a>
+    <a href="#" class="nav-tab">Comps</a>
+  </nav>
+  <div class="topbar-right">
+    <button class="btn-add">+ Add Listing</button>
+  </div>
+</div>
+
+<!-- HERO + FILTERS -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Commercial Property Marketing Hub</div>
+    <h1 class="hero-title">Find Your Next <em>Development</em> Site</h1>
+    <p class="hero-sub">AI-powered development renderings · Drone footage · Zoning analysis on every listing</p>
+    <div class="filter-bar">
+      <select class="filter-select">
+        <option>All Types</option>
+        <option>Land</option>
+        <option>Retail</option>
+        <option>Office</option>
+        <option>Industrial</option>
+      </select>
+      <select class="filter-select">
+        <option>Any Price</option>
+        <option>Under $500K</option>
+        <option>$500K – $1M</option>
+        <option>$1M – $5M</option>
+        <option>$5M+</option>
+      </select>
+      <select class="filter-select">
+        <option>Any State</option>
+        <option>North Carolina</option>
+        <option>South Carolina</option>
+        <option>Georgia</option>
+        <option>Texas</option>
+      </select>
+      <div class="filter-chip active">AI Renders ✦</div>
+      <div class="filter-chip">Drone Footage</div>
+      <div class="filter-chip">FLUM Commercial</div>
+      <div class="results-count" id="results-count">1 listing</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+  <div class="view-controls">
+    <span class="view-label">Showing 1 commercial property</span>
+    <div class="view-toggle">
+      <button class="view-btn active" title="Grid view">▦</button>
+      <button class="view-btn" title="List view">☰</button>
+    </div>
+  </div>
+
+  <!-- PROPERTY GRID -->
+  <div class="property-grid">
+
+    <!-- ── PROPERTY 1: 1301 Shelby Rd ── -->
+    <div class="prop-card" onclick="openDetail('shelby')">
+      <div class="card-img-wrap">
+        <img src="properties/1301-shelby-rd-kings-mountain-nc/1.png" alt="1301 Shelby Rd aerial" onerror="this.style.background='#2e2e2e';this.style.height='100%'">
+        <div class="card-badge badge-flum">FLUM → AU Commercial</div>
+        <div class="card-render-badge">6 AI Renders</div>
+        <div class="card-photo-count">1/7</div>
+      </div>
+      <div class="card-body">
+        <div class="card-price">$699,000</div>
+        <div class="card-address">1301 Shelby Rd, Kings Mountain, NC 28086</div>
+        <div class="card-tags">
+          <span class="tag">Land · 1.61 ac</span>
+          <span class="tag">SR → AU</span>
+          <span class="tag">325 ft Frontage</span>
+          <span class="tag">10,500 CPD</span>
+        </div>
+        <div class="card-stats">
+          <div class="stat">
+            <span class="stat-val">1.61</span>
+            <span class="stat-lbl">Acres</span>
+          </div>
+          <div class="stat">
+            <span class="stat-val">325 ft</span>
+            <span class="stat-lbl">Frontage</span>
+          </div>
+          <div class="stat">
+            <span class="stat-val">10,500</span>
+            <span class="stat-lbl">Cars/Day</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-broker">Listed by <strong>Point 135 Real Estate</strong></div>
+        <button class="btn-view-renders" onclick="event.stopPropagation(); openDetail('shelby')">View Renders →</button>
+      </div>
+    </div>
+
+    <!-- Coming Soon Cards -->
+    <div class="prop-card coming-soon-card">
+      <div class="cs-icon">＋</div>
+      <div class="cs-label">Next Property</div>
+    </div>
+    <div class="prop-card coming-soon-card">
+      <div class="cs-icon">＋</div>
+      <div class="cs-label">Coming Soon</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SITE FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">Just Solutions Commercial</div>
+  <div class="footer-right">
+    All information deemed reliable but not guaranteed.<br>
+    <span style="opacity:0.5">Buyer to verify all details independently.</span>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     PROPERTY DETAIL PANEL — SHELBY RD
+     ══════════════════════════════════════ -->
+<div class="detail-overlay" id="detail-shelby" onclick="closeDetailOverlay(event, 'shelby')">
+  <div class="detail-panel">
+
+    <!-- Header -->
+    <div class="detail-header">
+      <div class="detail-header-left">
+        <div class="detail-address">1301 Shelby Rd, Kings Mountain, NC 28086</div>
+        <div class="detail-price">$699,000 · Land · 1.61 Acres · 325 ft Frontage</div>
+      </div>
+      <div class="detail-header-right">
+        <button class="btn-drone" onclick="openYT('shelby')">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          Drone Footage
+        </button>
+        <button class="btn-close" onclick="closeDetail('shelby')">✕</button>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="detail-body">
+
+      <!-- Image Column -->
+      <div class="detail-images">
+
+        <!-- Original -->
+        <div>
+          <div class="orig-section-label">Original Property Photo</div>
+          <div class="orig-img-wrap" onclick="openLB('properties/1301-shelby-rd-kings-mountain-nc/1.png','Original Aerial · 1301 Shelby Rd','shelby',0)">
+            <img src="properties/1301-shelby-rd-kings-mountain-nc/1.png" alt="Original aerial">
+            <div class="orig-overlay">
+              <div class="orig-label">Aerial Overview — 1.61 Acre Parcel</div>
+              <div class="orig-sublabel">Click to expand · ↕ scroll for AI renders</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Renders -->
+        <div>
+          <div class="renders-section-label">AI Development Renderings — Click Any Image to Expand</div>
+          <div class="renders-grid-detail">
+
+            <div class="render-card-detail" onclick="openLB('properties/1301-shelby-rd-kings-mountain-nc/GAS STATION.png','Gas Station + C-Store · 1301 Shelby Rd','shelby',1)">
+              <img src="properties/1301-shelby-rd-kings-mountain-nc/GAS STATION.png" alt="Gas Station">
+              <div class="render-label-detail">⛽ Gas Station + C-Store</div>
+              <div class="render-zoom-icon">⤢</div>
+            </div>
+
+            <div class="render-card-detail" onclick="openLB('properties/1301-shelby-rd-kings-mountain-nc/CAR WASH.png','Express Car Wash · 1301 Shelby Rd','shelby',2)">
+              <img src="properties/1301-shelby-rd-kings-mountain-nc/CAR WASH.png" alt="Car Wash">
+              <div class="render-label-detail">🚗 Express Car Wash</div>
+              <div class="render-zoom-icon">⤢</div>
+            </div>
+
+            <div class="render-card-detail" onclick="openLB('properties/1301-shelby-rd-kings-mountain-nc/COFFEE DRIVE-THROUGH.png','Coffee Drive-Through · 1301 Shelby Rd','shelby',3)">
+              <img src="properties/1301-shelby-rd-kings-mountain-nc/COFFEE DRIVE-THROUGH.png" alt="Coffee Drive-Through">
+              <div class="render-label-detail">☕ Coffee Drive-Through</div>
+              <div class="render-zoom-icon">⤢</div>
+            </div>
+
+            <div class="render-card-detail" onclick="openLB('properties/1301-shelby-rd-kings-mountain-nc/DOLLAR STORE.png','Dollar Store · 1301 Shelby Rd','shelby',4)">
+              <img src="properties/1301-shelby-rd-kings-mountain-nc/DOLLAR STORE.png" alt="Dollar Store">
+              <div class="render-label-detail">🏪 Dollar Store / Retail</div>
+              <div class="render-zoom-icon">⤢</div>
+            </div>
+
+            <div class="render-card-detail" onclick="openLB('properties/1301-shelby-rd-kings-mountain-nc/DRIVE-THROUGH QSR.png','Drive-Through QSR · 1301 Shelby Rd','shelby',5)">
+              <img src="properties/1301-shelby-rd-kings-mountain-nc/DRIVE-THROUGH QSR.png" alt="QSR">
+              <div class="render-label-detail">🍔 Drive-Through QSR</div>
+              <div class="render-zoom-icon">⤢</div>
+            </div>
+
+            <div class="render-card-detail" onclick="openLB('properties/1301-shelby-rd-kings-mountain-nc/URGENT CARE - MEDICAL OFFICE.png','Urgent Care · 1301 Shelby Rd','shelby',6)">
+              <img src="properties/1301-shelby-rd-kings-mountain-nc/URGENT CARE - MEDICAL OFFICE.png" alt="Urgent Care">
+              <div class="render-label-detail">🏥 Urgent Care / Medical</div>
+              <div class="render-zoom-icon">⤢</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="detail-sidebar">
+
+        <!-- Key Stats -->
+        <div>
+          <div class="sidebar-section-title">Property Details</div>
+          <div class="sidebar-stats-grid">
+            <div class="sidebar-stat">
+              <span class="sidebar-stat-val">$699K</span>
+              <span class="sidebar-stat-lbl">Ask Price</span>
+            </div>
+            <div class="sidebar-stat">
+              <span class="sidebar-stat-val">1.61 ac</span>
+              <span class="sidebar-stat-lbl">Lot Size</span>
+            </div>
+            <div class="sidebar-stat">
+              <span class="sidebar-stat-val">325 ft</span>
+              <span class="sidebar-stat-lbl">Road Frontage</span>
+            </div>
+            <div class="sidebar-stat">
+              <span class="sidebar-stat-val">10,500</span>
+              <span class="sidebar-stat-lbl">Cars/Day</span>
+            </div>
+            <div class="sidebar-stat">
+              <span class="sidebar-stat-val">11,700</span>
+              <span class="sidebar-stat-lbl">Pop. 1-Mile</span>
+            </div>
+            <div class="sidebar-stat">
+              <span class="sidebar-stat-val">$91.6K</span>
+              <span class="sidebar-stat-lbl">Med. HH Income</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zoning -->
+        <div>
+          <div class="sidebar-section-title">Zoning</div>
+          <div class="zoning-block">
+            <div class="zoning-row">
+              <span class="zoning-key">Current</span>
+              <span class="zoning-val">SR — Suburban Residential</span>
+            </div>
+            <div class="zoning-row">
+              <span class="zoning-key">FLUM</span>
+              <span class="zoning-val highlight">AU — Auto-Urban Commercial ✦</span>
+            </div>
+            <div class="zoning-row">
+              <span class="zoning-key">Parcels</span>
+              <span class="zoning-val">#11977 · 11978 · 11979</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Permitted Uses -->
+        <div>
+          <div class="sidebar-section-title">AU Permitted Uses (Post-Rezoning)</div>
+          <div class="uses-list">
+            <div class="use-item"><span class="use-check">✓</span> Gas Station / C-Store</div>
+            <div class="use-item"><span class="use-check">✓</span> Drive-Through Restaurant</div>
+            <div class="use-item"><span class="use-check">✓</span> Express Car Wash</div>
+            <div class="use-item"><span class="use-check">✓</span> Coffee Drive-Through</div>
+            <div class="use-item"><span class="use-check">✓</span> Retail Strip Center</div>
+            <div class="use-item"><span class="use-check">✓</span> Urgent Care / Medical</div>
+            <div class="use-item"><span class="use-check">✓</span> Bank w/ Drive-Through</div>
+            <div class="use-item"><span class="use-check">✓</span> Dollar Store / Discount Retail</div>
+            <div class="use-item"><span class="use-check">✓</span> Hotel / Motel</div>
+          </div>
+        </div>
+
+        <!-- Contacts -->
+        <div>
+          <div class="sidebar-section-title">Listing Contacts</div>
+          <div class="contact-block">
+            <div class="contact-item">
+              <div class="contact-name">Chip McGill</div>
+              <div class="contact-info">
+                Point 135 Real Estate · LIC: NC 324218<br>
+                <a href="tel:7047186934">+1 704 718 6934</a><br>
+                <a href="mailto:chipmcgill@point135.com">chipmcgill@point135.com</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-name">Russ Putnam</div>
+              <div class="contact-info">
+                Point 135 Real Estate · LIC: NC 304874<br>
+                <a href="tel:7044730958">+1 704 473 0958</a><br>
+                <a href="mailto:russputnam@point135.com">russputnam@point135.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer-block">
+          <strong>Rendering Disclaimer:</strong> AI renderings depict potential development under proposed AU zoning per Kings Mountain FLUM. Property is currently SR. Rezoning required prior to commercial development. All information deemed reliable but not guaranteed.
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lb" onclick="closeLBClick(event)">
+  <button class="lb-close" onclick="closeLB()">✕</button>
+  <button class="lb-nav lb-prev" onclick="navLB(-1)">‹</button>
+  <img class="lb-img" id="lb-img" src="" alt="">
+  <div class="lb-cap" id="lb-cap"></div>
+  <button class="lb-nav lb-next" onclick="navLB(1)">›</button>
+</div>
+
+<!-- YOUTUBE MODAL -->
+<div class="yt-modal" id="yt-modal" onclick="closeYTClick(event)">
+  <button class="yt-close" onclick="closeYT()">✕</button>
+  <div class="yt-wrap">
+    <iframe id="yt-iframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+  </div>
+  <div class="yt-cap">📍 Drone Footage</div>
+</div>
+
+<script>
+// ── PROPERTY DATA ──
+const PROPS = {
+  shelby: {
+    ytId: 'VIDEO_ID_HERE', // ← Replace with your YouTube video ID
+    images: [
+      { src: 'properties/1301-shelby-rd-kings-mountain-nc/1.png', label: 'Original Aerial · 1301 Shelby Rd' },
+      { src: 'properties/1301-shelby-rd-kings-mountain-nc/GAS STATION.png', label: 'Gas Station + C-Store · 1301 Shelby Rd' },
+      { src: 'properties/1301-shelby-rd-kings-mountain-nc/CAR WASH.png', label: 'Express Car Wash · 1301 Shelby Rd' },
+      { src: 'properties/1301-shelby-rd-kings-mountain-nc/COFFEE DRIVE-THROUGH.png', label: 'Coffee Drive-Through · 1301 Shelby Rd' },
+      { src: 'properties/1301-shelby-rd-kings-mountain-nc/DOLLAR STORE.png', label: 'Dollar Store / Retail · 1301 Shelby Rd' },
+      { src: 'properties/1301-shelby-rd-kings-mountain-nc/DRIVE-THROUGH QSR.png', label: 'Drive-Through QSR · 1301 Shelby Rd' },
+      { src: 'properties/1301-shelby-rd-kings-mountain-nc/URGENT CARE - MEDICAL OFFICE.png', label: 'Urgent Care / Medical · 1301 Shelby Rd' },
+    ]
+  }
+  // Add more properties here as you scale:
+  // nextprop: { ytId: 'VIDEO_ID', images: [...] }
+};
+
+// ── DETAIL PANEL ──
+function openDetail(prop) {
+  document.getElementById('detail-' + prop).style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeDetail(prop) {
+  document.getElementById('detail-' + prop).style.display = 'none';
+  document.body.style.overflow = '';
+}
+function closeDetailOverlay(e, prop) {
+  if (e.target === document.getElementById('detail-' + prop)) closeDetail(prop);
+}
+
+// ── LIGHTBOX ──
+let lbProp = null, lbIdx = 0;
+
+function openLB(src, label, prop, idx) {
+  lbProp = prop; lbIdx = idx;
+  document.getElementById('lb-img').src = src;
+  document.getElementById('lb-cap').textContent = label;
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLB() {
+  document.getElementById('lb').classList.remove('open');
+}
+function closeLBClick(e) {
+  if (e.target === document.getElementById('lb')) closeLB();
+}
+function navLB(dir) {
+  const imgs = PROPS[lbProp].images;
+  lbIdx = (lbIdx + dir + imgs.length) % imgs.length;
+  document.getElementById('lb-img').src = imgs[lbIdx].src;
+  document.getElementById('lb-cap').textContent = imgs[lbIdx].label;
+}
+
+// ── YOUTUBE ──
+function openYT(prop) {
+  const id = PROPS[prop].ytId;
+  document.getElementById('yt-iframe').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+  document.getElementById('yt-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeYT() {
+  document.getElementById('yt-iframe').src = '';
+  document.getElementById('yt-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeYTClick(e) {
+  if (e.target === document.getElementById('yt-modal')) closeYT();
+}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeLB(); closeYT(); }
+  if (document.getElementById('lb').classList.contains('open')) {
+    if (e.key === 'ArrowRight') navLB(1);
+    if (e.key === 'ArrowLeft') navLB(-1);
+  }
+});
+
+// ── FILTER CHIPS ──
+document.querySelectorAll('.filter-chip').forEach(chip => {
+  chip.addEventListener('click', () => chip.classList.toggle('active'));
+});
+</script>
+
+</body>
+</html>
