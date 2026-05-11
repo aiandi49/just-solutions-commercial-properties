@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just Solutions — Video Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #f8f6f1;
+  --slate: #1c1c1c;
+  --mid: #2e2e2e;
+  --border: #2a2a2a;
+  --gold: #d4a84b;
+  --gold-dim: rgba(212,168,75,0.15);
+  --gold-border: rgba(212,168,75,0.3);
+  --muted: #666;
+  --text: #c8c4bc;
+  --green: #4caf82;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Instrument Sans', sans-serif;
+  min-height: 100vh;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: rgba(10,10,10,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 24px;
+}
+.brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+.brand span { color: var(--white); opacity: 0.5; }
+.topbar-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  flex: 1;
+}
+.nav-tab {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-tab:hover { color: var(--white); background: var(--mid); }
+.nav-tab.active { color: var(--gold); background: var(--mid); }
+
+/* ── HERO ── */
+.hero {
+  background: var(--slate);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 24px 32px;
+}
+.hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 800;
+  line-height: 1.0;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 400;
+}
+.hero-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  letter-spacing: 0.3px;
+}
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--mid);
+  border: 1px solid var(--border);
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.filter-chip:hover, .filter-chip.active {
+  color: var(--gold);
+  border-color: var(--gold-border);
+  background: var(--gold-dim);
+}
+.results-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── VIDEO GRID ── */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 16px;
+}
+
+/* ── VIDEO CARD ── */
+.video-card {
+  background: var(--slate);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.video-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212,168,75,0.4);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+
+/* Thumbnail */
+.thumb-wrap {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  background: var(--mid);
+}
+.thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.video-card:hover .thumb-wrap img { transform: scale(1.04); }
+
+/* Play button overlay */
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.25);
+  transition: background 0.2s;
+}
+.video-card:hover .play-overlay { background: rgba(0,0,0,0.15); }
+.play-btn {
+  width: 52px;
+  height: 52px;
+  background: rgba(212,168,75,0.92);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.video-card:hover .play-btn {
+  transform: scale(1.1);
+  background: var(--gold);
+}
+.play-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--black);
+  margin-left: 3px;
+}
+
+/* Duration badge */
+.duration-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.8);
+  color: var(--white);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+/* Tag badge */
+.tag-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-weight: 500;
+  background: rgba(212,168,75,0.9);
+  color: var(--black);
+}
+.tag-aerial { background: rgba(76,175,130,0.9); color: var(--black); }
+.tag-walkthrough { background: rgba(212,168,75,0.9); color: var(--black); }
+.tag-overview { background: rgba(90,120,200,0.9); color: var(--white); }
+
+/* Card body */
+.card-body {
+  padding: 16px 18px 18px;
+}
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--white);
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+.card-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.card-property {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.card-watch-btn {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--gold);
+  border: none;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s;
+  display: inline-block;
+}
+.card-watch-btn:hover { opacity: 0.85; }
+
+/* ── LIGHTBOX / MODAL ── */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 900;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(8px);
+}
+.modal-backdrop.open { display: flex; }
+.modal-inner {
+  width: 100%;
+  max-width: 900px;
+  background: var(--slate);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  animation: modalIn 0.25s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-video-wrap {
+  position: relative;
+  padding-bottom: 56.25%;
+  background: #000;
+}
+.modal-video-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.modal-footer {
+  padding: 16px 20px 18px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.modal-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.modal-close {
+  background: var(--mid);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  line-height: 1;
+}
+.modal-close:hover { color: var(--white); border-color: var(--gold-border); }
+
+/* Thumbnail loading state */
+.thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--mid) 0%, var(--slate) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .video-grid { grid-template-columns: 1fr; }
+  .nav-tabs { display: none; }
+  .modal-inner { border-radius: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a href="index.html" class="brand">Just<span> / </span>Solutions</a>
+  <div class="topbar-divider"></div>
+  <nav class="nav-tabs">
+    <a href="index.html" class="nav-tab">Properties</a>
+    <a href="videos.html" class="nav-tab active">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="2,1 9,5 2,9" fill="currentColor"/>
+      </svg>
+      Videos
+    </a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Just Solutions — Media Library</div>
+    <h1 class="hero-title">Property <em>Videos</em></h1>
+    <p class="hero-sub">Aerial drone footage, walkthroughs &amp; property overviews</p>
+    <div class="filter-bar">
+      <button class="filter-chip active" onclick="filterVideos('all', this)">All Videos</button>
+      <button class="filter-chip" onclick="filterVideos('aerial', this)">Aerial</button>
+      <button class="filter-chip" onclick="filterVideos('walkthrough', this)">Walkthrough</button>
+      <button class="filter-chip" onclick="filterVideos('overview', this)">Overview</button>
+      <span class="results-count" id="results-count">6 videos</span>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="section-label">Video Gallery</div>
+  <div class="video-grid" id="video-grid">
+
+    <!-- Card 1 -->
+    <div class="video-card" data-tag="aerial" onclick="openModal('TWfDSMJlcAc', 'Aerial Overview — Shelby Rd Parcel', 'SHELBY RD · FLUM AMENDMENT')">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/TWfDSMJlcAc/hqdefault.jpg" alt="Aerial Overview" loading="lazy"
+             onerror="this.style.display='none'">
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <span class="tag-badge tag-aerial">Aerial</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Aerial Overview — Shelby Rd Parcel</div>
+        <div class="card-desc">High-altitude drone footage of the full 1.61 acre parcel with property boundary visible.</div>
+        <div class="card-meta">
+          <span class="card-property">Shelby Rd</span>
+          <span class="card-watch-btn">Watch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="video-card" data-tag="aerial" onclick="openModal('grTr1TNQ7Ko', 'Drone Flyover — Road Frontage', 'SHELBY RD · +/- 325 FT FRONTAGE')">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/grTr1TNQ7Ko/hqdefault.jpg" alt="Drone Flyover" loading="lazy"
+             onerror="this.style.display='none'">
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <span class="tag-badge tag-aerial">Aerial</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Drone Flyover — Road Frontage</div>
+        <div class="card-desc">Low drone pass showcasing the +/- 325 ft of road frontage looking north toward Shelby Rd.</div>
+        <div class="card-meta">
+          <span class="card-property">Shelby Rd</span>
+          <span class="card-watch-btn">Watch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="video-card" data-tag="overview" onclick="openModal('i9c_SAFEhIE', 'Full Parcel Overview', 'SHELBY RD · MID-ALTITUDE AERIAL')">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/i9c_SAFEhIE/hqdefault.jpg" alt="Parcel Overview" loading="lazy"
+             onerror="this.style.display='none'">
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <span class="tag-badge tag-overview">Overview</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Full Parcel Overview</div>
+        <div class="card-desc">Mid-altitude aerial providing a clean, unobstructed view of the entire parcel and surrounding area.</div>
+        <div class="card-meta">
+          <span class="card-property">Shelby Rd</span>
+          <span class="card-watch-btn">Watch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="video-card" data-tag="walkthrough" onclick="openModal('PUSP9iqhPaM', 'Ground Level — Shelby Rd', 'SHELBY RD · STREET PERSPECTIVE')">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/PUSP9iqhPaM/hqdefault.jpg" alt="Ground Level View" loading="lazy"
+             onerror="this.style.display='none'">
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <span class="tag-badge tag-walkthrough">Walkthrough</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Ground Level — Shelby Rd</div>
+        <div class="card-desc">Street-level perspective looking south from Shelby Rd, showing the property's visual presence and access.</div>
+        <div class="card-meta">
+          <span class="card-property">Shelby Rd</span>
+          <span class="card-watch-btn">Watch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="video-card" data-tag="aerial" onclick="openModal('9aeVUuffR04', 'Aerial Survey — Site Conditions', 'SHELBY RD · SITE ANALYSIS')">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/9aeVUuffR04/hqdefault.jpg" alt="Aerial Survey" loading="lazy"
+             onerror="this.style.display='none'">
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <span class="tag-badge tag-aerial">Aerial</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Aerial Survey — Site Conditions</div>
+        <div class="card-desc">Detailed aerial survey documenting existing site conditions, topography, and surrounding development context.</div>
+        <div class="card-meta">
+          <span class="card-property">Shelby Rd</span>
+          <span class="card-watch-btn">Watch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="video-card" data-tag="overview" onclick="openModal('9oE3ZRkPRU8', 'Neighborhood Context — Area Overview', 'SHELBY RD · AREA CONTEXT')">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/9oE3ZRkPRU8/hqdefault.jpg" alt="Neighborhood Context" loading="lazy"
+             onerror="this.style.display='none'">
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <span class="tag-badge tag-overview">Overview</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Neighborhood Context — Area Overview</div>
+        <div class="card-desc">Wider area footage providing neighborhood context, proximity to arterials, and surrounding commercial activity.</div>
+        <div class="card-meta">
+          <span class="card-property">Shelby Rd</span>
+          <span class="card-watch-btn">Watch</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- VIDEO MODAL -->
+<div class="modal-backdrop" id="video-modal" onclick="handleBackdropClick(event)">
+  <div class="modal-inner">
+    <div class="modal-video-wrap">
+      <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    </div>
+    <div class="modal-footer">
+      <div>
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-sub" id="modal-sub"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(videoId, title, sub) {
+  document.getElementById('modal-iframe').src =
+    'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-sub').textContent = sub;
+  document.getElementById('video-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('video-modal').classList.remove('open');
+  document.getElementById('modal-iframe').src = '';
+  document.body.style.overflow = '';
+}
+
+function handleBackdropClick(e) {
+  if (e.target === document.getElementById('video-modal')) closeModal();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+function filterVideos(tag, btn) {
+  // Update active chip
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+
+  const cards = document.querySelectorAll('.video-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const match = tag === 'all' || card.dataset.tag === tag;
+    card.style.display = match ? '' : 'none';
+    if (match) visible++;
+  });
+
+  document.getElementById('results-count').textContent =
+    visible + (visible === 1 ? ' video' : ' videos');
+}
+</script>
+
+</body>
+</html>
